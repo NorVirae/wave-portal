@@ -30,13 +30,7 @@ connectionName: string
 
   const recreateWeb3 = async() => {
     let connectionDetails:ConnDetailsInterface = JSON.parse(window.localStorage.getItem("CONNECTION_DETAILS"))
-    console.log(connectionDetails)
-    if (connectionDetails){
-      console.log(connectionDetails.connectionName)
-      setConnectionName(connectionDetails.connectionName)
-      console.log("got in")
-
-    }
+    console.log(window.localStorage.getItem("CONNECTION_DETAILS"), "HALO")
     if (connectionName === "Injected"){
       await switchOrAddNetworkToMetamask()
       let mainConnection = await injected.activate()

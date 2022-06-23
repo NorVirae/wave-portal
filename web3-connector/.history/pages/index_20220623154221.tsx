@@ -4,7 +4,6 @@ import styles from '../styles/Home.module.css'
 import { injected } from '../component/wallet/connector'
 import { useWeb3React} from '@web3-react/core'
 import { useEffect, useState } from 'react'
-import Web3 from 'web3'
 
 declare global {
   interface Window {
@@ -14,41 +13,11 @@ declare global {
 }
 
 const Home: NextPage = () => {
-
-  useEffect(()=>{
-    recreateWeb3()
-  },[])
-
   const {account} = useWeb3React()
-  const [connectionName, setConnectionName] = useState<string>('')
+  const [connection, setConnection] = useState<string>("Injected")
   const [address, setAddress] = useState<string|null>(null)
+ 
   
-  interface ConnDetailsInterface{
-    address: string,
-connectionName: string
-  }
-
-  const recreateWeb3 = async() => {
-    let connectionDetails:ConnDetailsInterface = JSON.parse(window.localStorage.getItem("CONNECTION_DETAILS"))
-    console.log(connectionDetails)
-    if (connectionDetails){
-      console.log(connectionDetails.connectionName)
-      setConnectionName(connectionDetails.connectionName)
-      console.log("got in")
-
-    }
-    if (connectionName === "Injected"){
-      await switchOrAddNetworkToMetamask()
-      let mainConnection = await injected.activate()
-      window.APP_WEB3 = new Web3(Web3.givenProvider)
-      if (mainConnection.account){
-        setAddress(mainConnection.account)
-      }
-      window.localStorage.removeItem("CONNECTION_DETAILS")
-      console.log(account, "ACCT")
-    }
-  }
-
   const switchOrAddNetworkToMetamask = async () => {
     try{
       await window.ethereum.request({
@@ -61,24 +30,19 @@ connectionName: string
   }
 
   const connect = async () => {
-    setConnectionName("Injected")
-    if (connectionName === "Injected"){
-      console.log("ENTERED IF")
+    if (connection === "Injected"){
       await switchOrAddNetworkToMetamask()
       let mainConnection = await injected.activate()
-      window.APP_WEB3 = new Web3(Web3.givenProvider)
+      window.APP_WEB3 = mainConnection
       if (mainConnection.account){
         setAddress(mainConnection.account)
-        console.log("GOT IN")
       }
-      window.localStorage.setItem("CONNECTION_DETAILS", JSON.stringify({address: mainConnection.account, connectionName: "Injected"}))
-      console.log(account, "ACCT")
+      console.log()
     }
   }
 
   const disconnect = async () => {
     window.localStorage.removeItem("CONNECTION_DETAILS")
-    setAddress(null)
   }
 
   return (
@@ -104,7 +68,7 @@ connectionName: string
       </main>
 
       <footer className={styles.footer}>
-       <button onClick={e=>setConnectionName('Injected')}>Choose connection</button>
+       
       </footer>
     </div>
   )

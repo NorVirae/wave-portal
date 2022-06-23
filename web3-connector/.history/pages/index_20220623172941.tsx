@@ -30,10 +30,10 @@ connectionName: string
 
   const recreateWeb3 = async() => {
     let connectionDetails:ConnDetailsInterface = JSON.parse(window.localStorage.getItem("CONNECTION_DETAILS"))
-    console.log(connectionDetails)
+    console.log(connectionDetails.connectionName)
     if (connectionDetails){
-      console.log(connectionDetails.connectionName)
-      setConnectionName(connectionDetails.connectionName)
+      console.log(connectionDetails)
+      setConnectionName(connectionDetails)
       console.log("got in")
 
     }

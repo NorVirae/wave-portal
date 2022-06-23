@@ -30,13 +30,7 @@ connectionName: string
 
   const recreateWeb3 = async() => {
     let connectionDetails:ConnDetailsInterface = JSON.parse(window.localStorage.getItem("CONNECTION_DETAILS"))
-    console.log(connectionDetails)
-    if (connectionDetails){
-      console.log(connectionDetails.connectionName)
-      setConnectionName(connectionDetails.connectionName)
-      console.log("got in")
-
-    }
+    console.log(window.localStorage.getItem("CONNECTION_DETAILS"), "HALO")
     if (connectionName === "Injected"){
       await switchOrAddNetworkToMetamask()
       let mainConnection = await injected.activate()
@@ -63,13 +57,12 @@ connectionName: string
   const connect = async () => {
     setConnectionName("Injected")
     if (connectionName === "Injected"){
-      console.log("ENTERED IF")
       await switchOrAddNetworkToMetamask()
       let mainConnection = await injected.activate()
       window.APP_WEB3 = new Web3(Web3.givenProvider)
       if (mainConnection.account){
         setAddress(mainConnection.account)
-        console.log("GOT IN")
+        console.e
       }
       window.localStorage.setItem("CONNECTION_DETAILS", JSON.stringify({address: mainConnection.account, connectionName: "Injected"}))
       console.log(account, "ACCT")
@@ -104,7 +97,7 @@ connectionName: string
       </main>
 
       <footer className={styles.footer}>
-       <button onClick={e=>setConnectionName('Injected')}>Choose connection</button>
+       
       </footer>
     </div>
   )
