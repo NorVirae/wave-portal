@@ -23,6 +23,9 @@ module.exports = {
     rinkeby: {
       url: process.env.NODE_URL,
       accounts: [process.env.PRIVATE_KEY]
+    },
+    mainnet: {
+      
     }
   }
 };
