@@ -24,9 +24,9 @@ contract Wave{
         console.log("This contract has been deployed.");
     }
 
-    function wave(string memory _message) public{
+    function wave(string _message) public{
         totalWaves += 1;
-        waves.push(Wave(msg.sender, block.timestamp, _message));
+        wave.push(Wave(msg.sender, block.timestamp, _message));
         console.log("This man with the address has waved ", msg.sender );
 
         emit NewWave(msg.sender, block.timestamp, _message);
